@@ -38,6 +38,11 @@ namespace Fallout4CharacterGen
             JsonParser.WriteToDisk(data, userInputSpecialType);
             var deserializedSpecialPerkData = JsonParser.ReadSpecialSkillFromDisk(userInputSpecialType);
 
+            foreach (var SpecialPerk in deserializedSpecialPerkData)
+            {
+                Console.WriteLine(SpecialPerk.Name + " " + SpecialPerk.PlayerLevelRequirement);
+            }
+
             var userInput = await AskForAnotherFilename();
             if (userInput == "y") await AskForFilename();
         }

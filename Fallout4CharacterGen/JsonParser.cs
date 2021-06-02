@@ -10,22 +10,32 @@ namespace Fallout4CharacterGen
     {
         const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\json\";
         
-        public static void WriteToDisk(List<CsvRow> csvRows, string specialType)
+        /// <summary>
+        /// JSON Writer
+        /// </summary>
+        /// <param name="csvRows"></param>
+        /// <param name="specialType"></param>
+        public static void WriteToDisk(List<SpecialPerkCsvRow> csvRows, string specialType)
         {
             var fileName = folderPath + specialType + ".json";
             
-            var json = JsonSerializer.Serialize<List<CsvRow>>(csvRows);
+            var json = JsonSerializer.Serialize<List<SpecialPerkCsvRow>>(csvRows);
             File.WriteAllText(fileName, json);
         }
 
-        public static List<CsvRow> ReadSpecialSkillFromDisk(string specialName)
+        /// <summary>
+        /// JSON reader
+        /// </summary>
+        /// <param name="specialName"></param>
+        /// <returns></returns>
+        public static List<SpecialPerkCsvRow> ReadSpecialSkillFromDisk(string specialName)
         {
             var filePath = folderPath + specialName + ".json";
             
             using (var streamReader = new StreamReader(filePath))
             {
                 var json = streamReader.ReadToEnd();
-                var specialPerks = JsonSerializer.Deserialize<List<CsvRow>>(json);
+                var specialPerks = JsonSerializer.Deserialize<List<SpecialPerkCsvRow>>(json);
 
                 return specialPerks;
             }
