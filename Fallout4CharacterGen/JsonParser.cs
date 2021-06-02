@@ -12,15 +12,17 @@ namespace Fallout4CharacterGen
         
         public static void WriteToDisk(List<CsvRow> csvRows, string specialType)
         {
-            var fileName = $"{specialType}.json";
+            var fileName = path + specialType + ".json";
             
             var json = JsonSerializer.Serialize<List<CsvRow>>(csvRows);
-            File.WriteAllText(path + fileName, json);
+            File.WriteAllText(fileName, json);
         }
 
         public static List<CsvRow> ReadSpecialSkillFromDisk(string specialName)
         {
-            using (var streamReader = new StreamReader(path + specialName + ".json"))
+            var filePath = path + specialName + ".json";
+            
+            using (var streamReader = new StreamReader(filePath))
             {
                 var json = streamReader.ReadToEnd();
                 var specialPerks = JsonSerializer.Deserialize<List<CsvRow>>(json);

@@ -20,10 +20,11 @@ namespace Fallout4CharacterGen
 
         private static void LoadData()
         {
-            var data = CsvReader.LoadCsvData();
+            var specialType = "agility";
             
-            JsonParser.WriteToDisk(data, "strength");
-            var deserialisedSpecialPerkData = JsonParser.ReadSpecialSkillFromDisk("strength");
+            var data = CsvReader.LoadCsvData(specialType);
+            JsonParser.WriteToDisk(data, specialType);
+            var deserializedSpecialPerkData = JsonParser.ReadSpecialSkillFromDisk(specialType);
             
         }
     }

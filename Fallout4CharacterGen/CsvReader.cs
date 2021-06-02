@@ -7,10 +7,12 @@ namespace Fallout4CharacterGen
 {
     public static class CsvReader
     {
-        public static List<CsvRow> LoadCsvData()
+        public static List<CsvRow> LoadCsvData(string specialType)
         {
             var specialSkill = new List<CsvRow>();
-            const string path = @"C:\Users\alexs\Desktop\fallout4_csv\special\strength.csv";
+            const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\";
+            var fileName = specialType + ".csv";
+            var path = folderPath + fileName;
 
             using (var csvParser = new TextFieldParser(path))
             {
