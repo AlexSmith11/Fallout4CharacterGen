@@ -6,11 +6,12 @@ using Fallout4CharacterGen.Models;
 
 namespace Fallout4CharacterGen
 {
-    public class JsonParser
+    public static class JsonParser
     {
+        const string path = @"C:\Users\alexs\Desktop\fallout4_csv\special\json\";
+        
         public static void WriteToDisk(List<CsvRow> csvRows, string specialType)
         {
-            var path = @"C:\Users\alexs\Desktop\fallout4_csv\special\";
             var fileName = $"{specialType}.json";
             
             var json = JsonSerializer.Serialize<List<CsvRow>>(csvRows);
@@ -19,9 +20,13 @@ namespace Fallout4CharacterGen
 
         public static List<CsvRow> ReadSpecialSkillFromDisk(string specialName)
         {
-            
-            
-            return null;
+            using (var streamReader = new StreamReader(path + specialName + ".json"))
+            {
+                var json = streamReader.ReadToEnd();
+                var specialPerks = JsonSerializer.Deserialize<List<CsvRow>>(json);
+
+                return specialPerks;
+            }
         }
     }
 }

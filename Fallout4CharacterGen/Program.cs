@@ -23,6 +23,8 @@ namespace Fallout4CharacterGen
             var data = CsvReader.LoadCsvData();
             
             JsonParser.WriteToDisk(data, "strength");
+            var deserialisedSpecialPerkData = JsonParser.ReadSpecialSkillFromDisk("strength");
+            
         }
     }
 }
