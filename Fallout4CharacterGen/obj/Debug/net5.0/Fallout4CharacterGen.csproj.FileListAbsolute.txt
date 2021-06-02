@@ -1,0 +1,16 @@
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\bin\Debug\net5.0\Fallout4CharacterGen.exe
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\bin\Debug\net5.0\Fallout4CharacterGen.deps.json
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\bin\Debug\net5.0\Fallout4CharacterGen.runtimeconfig.json
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\bin\Debug\net5.0\Fallout4CharacterGen.runtimeconfig.dev.json
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\bin\Debug\net5.0\Fallout4CharacterGen.dll
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\bin\Debug\net5.0\ref\Fallout4CharacterGen.dll
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\bin\Debug\net5.0\Fallout4CharacterGen.pdb
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\obj\Debug\net5.0\Fallout4CharacterGen.csprojAssemblyReference.cache
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\obj\Debug\net5.0\Fallout4CharacterGen.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\obj\Debug\net5.0\Fallout4CharacterGen.AssemblyInfoInputs.cache
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\obj\Debug\net5.0\Fallout4CharacterGen.AssemblyInfo.cs
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\obj\Debug\net5.0\Fallout4CharacterGen.csproj.CoreCompileInputs.cache
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\obj\Debug\net5.0\Fallout4CharacterGen.dll
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\obj\Debug\net5.0\ref\Fallout4CharacterGen.dll
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\obj\Debug\net5.0\Fallout4CharacterGen.pdb
+C:\Users\alexs\Documents\doodles\Fallout4CharacterGen\Fallout4CharacterGen\obj\Debug\net5.0\Fallout4CharacterGen.genruntimeconfig.cache

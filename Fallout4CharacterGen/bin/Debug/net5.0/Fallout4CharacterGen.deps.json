@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "Fallout4CharacterGen/1.0.0": {
+        "runtime": {
+          "Fallout4CharacterGen.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Fallout4CharacterGen/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
