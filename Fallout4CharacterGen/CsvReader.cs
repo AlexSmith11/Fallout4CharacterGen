@@ -9,10 +9,10 @@ namespace Fallout4CharacterGen
     {
         public static List<CsvRow> LoadCsvData(string specialType)
         {
-            var specialSkill = new List<CsvRow>();
             const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\";
             var fileName = specialType + ".csv";
             var path = folderPath + fileName;
+            var specialSkill = new List<CsvRow>();
 
             using (var csvParser = new TextFieldParser(path))
             {
@@ -39,7 +39,6 @@ namespace Fallout4CharacterGen
                         FormId = fields[5]
                     };
                     specialSkill.Add(newRow);
-                    
                 }
             }
 

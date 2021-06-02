@@ -8,11 +8,11 @@ namespace Fallout4CharacterGen
 {
     public static class JsonParser
     {
-        const string path = @"C:\Users\alexs\Desktop\fallout4_csv\special\json\";
+        const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\json\";
         
         public static void WriteToDisk(List<CsvRow> csvRows, string specialType)
         {
-            var fileName = path + specialType + ".json";
+            var fileName = folderPath + specialType + ".json";
             
             var json = JsonSerializer.Serialize<List<CsvRow>>(csvRows);
             File.WriteAllText(fileName, json);
@@ -20,7 +20,7 @@ namespace Fallout4CharacterGen
 
         public static List<CsvRow> ReadSpecialSkillFromDisk(string specialName)
         {
-            var filePath = path + specialName + ".json";
+            var filePath = folderPath + specialName + ".json";
             
             using (var streamReader = new StreamReader(filePath))
             {
