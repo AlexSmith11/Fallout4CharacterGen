@@ -9,7 +9,7 @@ namespace Fallout4CharacterGen
         {
             // store API calls here
             await ApiCalls();
-
+            
             LoadData();
         }
 

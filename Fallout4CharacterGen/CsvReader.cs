@@ -30,7 +30,7 @@ namespace Fallout4CharacterGen
                     var newRow = new CsvRow()
                     {
                         Name = fields[0],
-                        SpecialRank = fields[1],
+                        SpecialRankRequirement = fields[1],
                         PerkRank = fields[2],
                         PlayerLevelRequirement = fields[3],
                         Description = fields[4],

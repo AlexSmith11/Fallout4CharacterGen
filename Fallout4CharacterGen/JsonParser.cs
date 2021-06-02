@@ -8,10 +8,10 @@ namespace Fallout4CharacterGen
 {
     public class JsonParser
     {
-        public static void WriteToDisk(List<CsvRow> csvRows, string fileNameString)
+        public static void WriteToDisk(List<CsvRow> csvRows, string specialType)
         {
             var path = @"C:\Users\alexs\Desktop\fallout4_csv\special\";
-            var fileName = $"{fileNameString}.json";
+            var fileName = $"{specialType}.json";
             
             var json = JsonSerializer.Serialize<List<CsvRow>>(csvRows);
             File.WriteAllText(path + fileName, json);
