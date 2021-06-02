@@ -8,6 +8,7 @@ namespace Fallout4CharacterGen
     {
         private static async Task Main(string[] args)
         {
+            // Run the CSV & JSON reader writer program
             await CsvAndJsonReaderWriter.AskForFilename();
         }
     }

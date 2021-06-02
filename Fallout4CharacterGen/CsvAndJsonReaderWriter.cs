@@ -48,7 +48,7 @@ namespace Fallout4CharacterGen
         /// <returns></returns>
         public static async Task AskForFilename()
         {
-            Console.Write("Please enter the number of words you wish to view: ");
+            Console.Write("Please enter the name of the file you wish to parse: ");
             await UserInputLoop();
         }
 
