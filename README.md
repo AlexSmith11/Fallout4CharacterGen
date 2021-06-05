@@ -14,6 +14,7 @@ The steps taken during this project:
 - JSON deserialiser to read stored JSON
 -
 
+# Explanation
 The two main ways a character is initially personalised is done is through the S.P.E.C.I.A.L. system, and the perk system.
 
 S.P.E.C.I.A.L. stands for:
