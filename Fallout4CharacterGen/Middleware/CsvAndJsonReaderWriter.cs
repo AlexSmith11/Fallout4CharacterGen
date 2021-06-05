@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Fallout4CharacterGen.DatabaseSource.Local;
 using Fallout4CharacterGen.Interfaces;
 using Fallout4CharacterGen.Models;
-using Fallout4CharacterGen.Source.Local;
 
 namespace Fallout4CharacterGen.Middleware
 {
@@ -23,6 +23,7 @@ namespace Fallout4CharacterGen.Middleware
                 Console.WriteLine("Error");
                 return;
             }
+
             JsonParser.WriteToDisk(data, userInputSpecialType);
             var deserializedSpecialPerkData = JsonParser.ReadSpecialSkillFromDisk(userInputSpecialType);
 
@@ -34,7 +35,7 @@ namespace Fallout4CharacterGen.Middleware
             var userInput = await AskForAnotherFilename();
             if (userInput == "y") await AskForFilename();
         }
-        
+
         /// <summary>
         /// inefficient method that returns all special type perks
         /// </summary>
@@ -42,9 +43,30 @@ namespace Fallout4CharacterGen.Middleware
         /// <exception cref="NotImplementedException"></exception>
         public async Task<List<SpecialSkill>> GetSpecialSkillData()
         {
-            throw new NotImplementedException();
-            
-            
+            var allSpecialSkillsList = new List<SpecialSkill>();
+            var specialNames = new List<string>
+                {"strength", "perception", "endurance", "charisma", "intelligence", "agility", "luck"};
+
+            foreach (var specialName in specialNames)
+            {
+                var tempSpecialPerkList = JsonParser.ReadSpecialSkillFromDisk(specialName);
+
+                var specialSkillsList = new SpecialSkill
+                {
+                    rows = new List<SpecialPerkRow>(),
+                    SpecialName = specialName
+                };
+
+                foreach (var perk in tempSpecialPerkList)
+                {
+                    specialSkillsList.rows.Add(perk);
+                }
+
+
+                allSpecialSkillsList.Add(specialSkillsList);
+            }
+
+            return allSpecialSkillsList;
         }
 
         /// <summary>
@@ -56,7 +78,7 @@ namespace Fallout4CharacterGen.Middleware
             Console.Write("Please enter the name of the file you wish to parse: ");
             await UserInputLoop();
         }
-        
+
         /// <summary>
         /// Loop user input until a valid filename is entered
         /// </summary>
@@ -64,8 +86,8 @@ namespace Fallout4CharacterGen.Middleware
         private static async Task UserInputLoop()
         {
             var userInput = Console.ReadLine();
-            
-            if(CheckIfCsvFileExists(userInput)) await LoadData(userInput);  // recursive condition
+
+            if (CheckIfCsvFileExists(userInput)) await LoadData(userInput); // recursive condition
             else
             {
                 Console.Write("Your input was not a number - please try again: ");
@@ -93,7 +115,7 @@ namespace Fallout4CharacterGen.Middleware
             const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\";
             var fileName = specialType + ".csv";
             var path = folderPath + fileName;
-            
+
             return File.Exists(path);
         }
     }

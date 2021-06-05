@@ -5,10 +5,10 @@ namespace Fallout4CharacterGen.Models
     public class SpecialSkill
     {
         public string SpecialName { get; set; }
-        public List<SpecialPerkCsvRow> rows { get; set; }
+        public List<SpecialPerkRow> rows { get; set; }
     }
 
-    public class SpecialPerkCsvRow
+    public class SpecialPerkRow
     {
         public string Name { get; set; }
         public string SpecialRankRequirement { get; set; }

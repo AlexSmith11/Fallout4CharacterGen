@@ -3,22 +3,22 @@ using System.IO;
 using System.Text.Json;
 using Fallout4CharacterGen.Models;
 
-namespace Fallout4CharacterGen.Source.Local
+namespace Fallout4CharacterGen.DatabaseSource.Local
 {
     public static class JsonParser
     {
-        const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\json\";
+        private const string FolderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\json\";
         
         /// <summary>
         /// JSON Writer
         /// </summary>
         /// <param name="csvRows"></param>
         /// <param name="specialType"></param>
-        public static void WriteToDisk(List<SpecialPerkCsvRow> csvRows, string specialType)
+        public static void WriteToDisk(List<SpecialPerkRow> csvRows, string specialType)
         {
-            var fileName = folderPath + specialType + ".json";
+            var fileName = FolderPath + specialType + ".json";
             
-            var json = JsonSerializer.Serialize<List<SpecialPerkCsvRow>>(csvRows);
+            var json = JsonSerializer.Serialize<List<SpecialPerkRow>>(csvRows);
             File.WriteAllText(fileName, json);
         }
 
@@ -27,14 +27,14 @@ namespace Fallout4CharacterGen.Source.Local
         /// </summary>
         /// <param name="specialName"></param>
         /// <returns></returns>
-        public static List<SpecialPerkCsvRow> ReadSpecialSkillFromDisk(string specialName)
+        public static List<SpecialPerkRow> ReadSpecialSkillFromDisk(string specialName)
         {
-            var filePath = folderPath + specialName + ".json";
+            var filePath = FolderPath + specialName + ".json";
             
             using (var streamReader = new StreamReader(filePath))
             {
                 var json = streamReader.ReadToEnd();
-                var specialPerks = JsonSerializer.Deserialize<List<SpecialPerkCsvRow>>(json);
+                var specialPerks = JsonSerializer.Deserialize<List<SpecialPerkRow>>(json);
 
                 return specialPerks;
             }

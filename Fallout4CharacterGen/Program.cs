@@ -14,10 +14,10 @@ namespace Fallout4CharacterGen
         {
             // await CsvAndJsonReaderWriter.AskForFilename(); // Run the CSV & JSON reader writer program
 
-            await getStuff();
+            await GetStuff();
         }
 
-        private static async Task getStuff()
+        private static async Task GetStuff()
         {
             var temp = await ReaderWriter.GetSpecialSkillData();
         }
