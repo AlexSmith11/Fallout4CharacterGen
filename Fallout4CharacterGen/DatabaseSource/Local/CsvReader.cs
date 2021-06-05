@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Fallout4CharacterGen.Models;
 using Microsoft.VisualBasic.FileIO;
 
-namespace Fallout4CharacterGen
+namespace Fallout4CharacterGen.Source.Local
 {
     public static class CsvReader
     {

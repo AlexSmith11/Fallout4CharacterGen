@@ -1,27 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Fallout4CharacterGen.Interfaces;
+using Fallout4CharacterGen.Models;
+using Fallout4CharacterGen.Source.Local;
 
-namespace Fallout4CharacterGen
+namespace Fallout4CharacterGen.Middleware
 {
-    public static class CsvAndJsonReaderWriter
+    public class CsvAndJsonReaderWriter : ICsvJsonReaderWriter
     {
-        /// <summary>
-        /// Loop user input until a valid filename is entered
-        /// </summary>
-        /// <returns></returns>
-        private static async Task UserInputLoop()
-        {
-            var userInput = Console.ReadLine();
-            
-            if(CheckIfCsvFileExists(userInput)) await LoadData(userInput);  // recursive condition
-            else
-            {
-                Console.Write("Your input was not a number - please try again: ");
-                await UserInputLoop();
-            }
-        }
-
         /// <summary>
         /// Load CSV data, parse it into JSON, then read JSON back in.
         /// </summary>
@@ -38,15 +26,27 @@ namespace Fallout4CharacterGen
             JsonParser.WriteToDisk(data, userInputSpecialType);
             var deserializedSpecialPerkData = JsonParser.ReadSpecialSkillFromDisk(userInputSpecialType);
 
-            foreach (var SpecialPerk in deserializedSpecialPerkData)
+            foreach (var specialPerk in deserializedSpecialPerkData)
             {
-                Console.WriteLine(SpecialPerk.Name + " " + SpecialPerk.PlayerLevelRequirement);
+                Console.WriteLine(specialPerk.Name + " " + specialPerk.PlayerLevelRequirement);
             }
 
             var userInput = await AskForAnotherFilename();
             if (userInput == "y") await AskForFilename();
         }
         
+        /// <summary>
+        /// inefficient method that returns all special type perks
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<List<SpecialSkill>> GetSpecialSkillData()
+        {
+            throw new NotImplementedException();
+            
+            
+        }
+
         /// <summary>
         /// Ask the user for a file name
         /// </summary>
@@ -55,6 +55,22 @@ namespace Fallout4CharacterGen
         {
             Console.Write("Please enter the name of the file you wish to parse: ");
             await UserInputLoop();
+        }
+        
+        /// <summary>
+        /// Loop user input until a valid filename is entered
+        /// </summary>
+        /// <returns></returns>
+        private static async Task UserInputLoop()
+        {
+            var userInput = Console.ReadLine();
+            
+            if(CheckIfCsvFileExists(userInput)) await LoadData(userInput);  // recursive condition
+            else
+            {
+                Console.Write("Your input was not a number - please try again: ");
+                await UserInputLoop();
+            }
         }
 
         /// <summary>

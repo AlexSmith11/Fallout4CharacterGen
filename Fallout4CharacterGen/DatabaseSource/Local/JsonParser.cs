@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Fallout4CharacterGen.Models;
 
-namespace Fallout4CharacterGen
+namespace Fallout4CharacterGen.Source.Local
 {
     public static class JsonParser
     {
