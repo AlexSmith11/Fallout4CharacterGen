@@ -7,5 +7,7 @@ namespace Fallout4CharacterGen.Interfaces
     public interface ICsvJsonReaderWriter
     {
         public Task<List<SpecialSkill>> GetSpecialSkillData();
+        
+        public Task AskForFilename();
     }
 }

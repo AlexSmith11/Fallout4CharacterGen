@@ -15,7 +15,7 @@ namespace Fallout4CharacterGen.Middleware
         /// </summary>
         /// <param name="userInputSpecialType"></param>
         /// <returns></returns>
-        private static async Task LoadData(string userInputSpecialType)
+        private async Task LoadData(string userInputSpecialType)
         {
             var data = CsvReader.LoadCsvData(userInputSpecialType);
             if (data is null)
@@ -53,13 +53,13 @@ namespace Fallout4CharacterGen.Middleware
 
                 var specialSkillsList = new SpecialSkill
                 {
-                    rows = new List<SpecialPerkRow>(),
+                    Rows = new List<SpecialPerkRow>(),
                     SpecialName = specialName
                 };
 
                 foreach (var perk in tempSpecialPerkList)
                 {
-                    specialSkillsList.rows.Add(perk);
+                    specialSkillsList.Rows.Add(perk);
                 }
 
 
@@ -73,7 +73,7 @@ namespace Fallout4CharacterGen.Middleware
         /// Ask the user for a file name
         /// </summary>
         /// <returns></returns>
-        public static async Task AskForFilename()
+        public async Task AskForFilename()
         {
             Console.Write("Please enter the name of the file you wish to parse: ");
             await UserInputLoop();
@@ -83,7 +83,7 @@ namespace Fallout4CharacterGen.Middleware
         /// Loop user input until a valid filename is entered
         /// </summary>
         /// <returns></returns>
-        private static async Task UserInputLoop()
+        private async Task UserInputLoop()
         {
             var userInput = Console.ReadLine();
 

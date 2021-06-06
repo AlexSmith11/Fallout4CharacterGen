@@ -12,7 +12,7 @@ namespace Fallout4CharacterGen
         
         private static async Task Main(string[] args)
         {
-            // await CsvAndJsonReaderWriter.AskForFilename(); // Run the CSV & JSON reader writer program
+            // await ReaderWriter.AskForFilename(); // Run the CSV & JSON reader writer program
 
             await GetStuff();
         }
@@ -20,6 +20,8 @@ namespace Fallout4CharacterGen
         private static async Task GetStuff()
         {
             var temp = await ReaderWriter.GetSpecialSkillData();
+
+            var temp2 = 1^2;
         }
     }
 }
