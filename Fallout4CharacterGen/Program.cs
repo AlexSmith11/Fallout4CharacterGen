@@ -19,9 +19,15 @@ namespace Fallout4CharacterGen
 
         private static async Task GetStuff()
         {
-            var temp = await ReaderWriter.GetSpecialSkillData();
-
-            var temp2 = 1^2;
+            var specialList = await ReaderWriter.GetSpecialSkillData();
+            
+            // get random perk
+            var randomNum = new Random();
+            var randomIndex1 = randomNum.Next(specialList.Count);
+            var randomIndex2 = randomNum.Next(specialList[randomIndex1].Rows.Count);
+            
+            Console.Write(specialList[randomIndex1].SpecialName + ": ");
+            Console.WriteLine(specialList[randomIndex1].Rows[randomIndex2].Name);
         }
     }
 }

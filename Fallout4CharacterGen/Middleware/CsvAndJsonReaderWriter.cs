@@ -11,32 +11,6 @@ namespace Fallout4CharacterGen.Middleware
     public class CsvAndJsonReaderWriter : ICsvJsonReaderWriter
     {
         /// <summary>
-        /// Load CSV data, parse it into JSON, then read JSON back in.
-        /// </summary>
-        /// <param name="userInputSpecialType"></param>
-        /// <returns></returns>
-        private async Task LoadData(string userInputSpecialType)
-        {
-            var data = CsvReader.LoadCsvData(userInputSpecialType);
-            if (data is null)
-            {
-                Console.WriteLine("Error");
-                return;
-            }
-
-            JsonParser.WriteToDisk(data, userInputSpecialType);
-            var deserializedSpecialPerkData = JsonParser.ReadSpecialSkillFromDisk(userInputSpecialType);
-
-            foreach (var specialPerk in deserializedSpecialPerkData)
-            {
-                Console.WriteLine(specialPerk.Name + " " + specialPerk.PlayerLevelRequirement);
-            }
-
-            var userInput = await AskForAnotherFilename();
-            if (userInput == "y") await AskForFilename();
-        }
-
-        /// <summary>
         /// inefficient method that returns all special type perks
         /// </summary>
         /// <returns></returns>
@@ -50,7 +24,6 @@ namespace Fallout4CharacterGen.Middleware
             foreach (var specialName in specialNames)
             {
                 var tempSpecialPerkList = JsonParser.ReadSpecialSkillFromDisk(specialName);
-
                 var specialSkillsList = new SpecialSkill
                 {
                     Rows = new List<SpecialPerkRow>(),
@@ -61,7 +34,6 @@ namespace Fallout4CharacterGen.Middleware
                 {
                     specialSkillsList.Rows.Add(perk);
                 }
-
 
                 allSpecialSkillsList.Add(specialSkillsList);
             }
@@ -87,12 +59,32 @@ namespace Fallout4CharacterGen.Middleware
         {
             var userInput = Console.ReadLine();
 
-            if (CheckIfCsvFileExists(userInput)) await LoadData(userInput); // recursive condition
+            if (CheckIfCsvFileExists(userInput)) await WriteCsvDataToJson(userInput); // recursive condition
             else
             {
                 Console.Write("Your input was not a number - please try again: ");
                 await UserInputLoop();
             }
+        }
+        
+        /// <summary>
+        /// Load CSV data, parse it into JSON, then read JSON back in.
+        /// </summary>
+        /// <param name="userInputSpecialType"></param>
+        /// <returns></returns>
+        private async Task WriteCsvDataToJson(string userInputSpecialType)
+        {
+            var data = CsvReader.LoadCsvData(userInputSpecialType);
+            if (data is null)
+            {
+                Console.WriteLine("Error");
+                return;
+            }
+
+            JsonParser.WriteToDisk(data, userInputSpecialType);
+
+            var userInput = await AskForAnotherFilename();
+            if (userInput == "y") await AskForFilename();
         }
 
         /// <summary>
