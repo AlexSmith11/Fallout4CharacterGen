@@ -12,9 +12,9 @@ namespace Fallout4CharacterGen.Models
     public class SpecialPerk
     {
         public string Name { get; set; }
-        public string SpecialRankRequirement { get; set; }
+        public string SpecialRankRequirement { get; set; } = "1";
         public string PerkRank { get; set; }
-        public string PlayerLevelRequirement { get; set; }
+        public string PlayerLevelRequirement { get; set; } = "1";
         public string Description { get; set; }
         public string FormId { get; set; }
         public string ParentSpecialName { get; set; }

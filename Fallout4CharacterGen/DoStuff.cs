@@ -42,6 +42,8 @@ namespace Fallout4CharacterGen
             
             // now need to match the two lists and merge them(?)
             await GeneratePerkLists(perkList, charactersSpecialRanks);
+
+            var temp = 1 ^ 2;
         }
 
         // refactor into SpecialManager
@@ -94,8 +96,14 @@ namespace Fallout4CharacterGen
                     var tempSpecialToAddTo = perkList[randomSpecialIndexTemp];
                     var tempPerkToAdd = perkList[randomSpecialIndexTemp].Perks[randomPerkIndexTemp];
                     var characterSpecialSkill = characterSpecialSkills.First(x => x.SpecialName.Equals(tempSpecialToAddTo.SpecialName));    // list of perks within the currently accessed special skill
+                    characterSpecialSkill.Perks ??= new List<SpecialPerk>();    // make sure the perk list is not null
+                    
                     var characterPerks = characterSpecialSkill.Perks
                         .Where(x => x.Name.Equals(tempPerkToAdd.Name)).OrderBy(x => x.PerkRank).ToList();    // perks we already have in the current special type
+                    
+                    // set default values
+                    if (tempPerkToAdd.PlayerLevelRequirement == "") tempPerkToAdd.PlayerLevelRequirement = "1";
+                    if (tempPerkToAdd.SpecialRankRequirement == "") tempPerkToAdd.SpecialRankRequirement = "1";
                     
                     foreach (var characterPerk in characterPerks)
                     {
@@ -103,11 +111,12 @@ namespace Fallout4CharacterGen
                     }
                     if (!isPerkValid) continue;
                     
-                    if (int.Parse(tempPerkToAdd.PlayerLevelRequirement) > i)
+                    var temp = int.Parse(tempPerkToAdd.PlayerLevelRequirement);
+                    if (temp > i)
                     {
                         continue;
                     }
-
+                    
                     if (int.Parse(tempPerkToAdd.SpecialRankRequirement) > characterSpecialSkill.SpecialLevel)
                     {
                         continue;
@@ -123,7 +132,7 @@ namespace Fallout4CharacterGen
                     // persist the perks selected
                     randomSpecialIndex = randomSpecialIndexTemp;
                     randomPerkIndex = randomPerkIndexTemp;
-                    check = 1;
+                    check = 1;  // can't add the perk until all previous checks have been made
                 }
 
                 var randomSpecialType = perkList[randomSpecialIndex];
