@@ -18,8 +18,7 @@ namespace Fallout4CharacterGen.Middleware
         public async Task<List<SpecialSkill>> GetSpecialSkillData()
         {
             var allSpecialSkillsList = new List<SpecialSkill>();
-            var specialNames = new List<string>
-                {"strength", "perception", "endurance", "charisma", "intelligence", "agility", "luck"};
+            var specialNames = SpecialSkills.SpecialNames;
 
             foreach (var specialName in specialNames)
             {

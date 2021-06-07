@@ -5,6 +5,7 @@ namespace Fallout4CharacterGen.Models
     public class SpecialSkill
     {
         public string SpecialName { get; set; }
+        public int SpecialLevel { get; set; }
         public List<SpecialPerkRow> Rows { get; set; }
     }
 
