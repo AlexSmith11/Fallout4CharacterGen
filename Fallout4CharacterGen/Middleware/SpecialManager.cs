@@ -18,6 +18,18 @@ namespace Fallout4CharacterGen.Middleware
         /// - max any special skill can be: 10
         ///
         /// changed Random.Next() implementation due to thread issues. See here: https://csharpindepth.com/Articles/Random
+        ///
+        /// method:
+        /// if maxCounter > 10:
+        /// assign random num between 1 - 10 to current special type
+        /// take random num off maxCounter
+        /// if maxCounter is smaller than 10:
+        /// assign random num between 1 - maxCounter
+        /// if points left over loop again - continue until maxCounter = 0
+        /// 
+        /// to counter biasing (if it exists) the first special types listed, we select the special type to generate randomly
+        /// i.e. select agility to assign to first, then perception, etc
+        /// 
         /// </summary>
         /// <returns>list of special rankings</returns>
         public async Task<List<SpecialSkill>> GenerateSpecialPoints()
@@ -26,33 +38,21 @@ namespace Fallout4CharacterGen.Middleware
             var specialTypesList = new List<SpecialSkill>();
             var rng = new Random();
 
-            // method 1:
-            // if maxCounter > 10:
-            // assign random num between 1 - 10 to current special type
-            // take random num off maxCounter
-            // if maxCounter < 10:
-            // assign random num between 1 - maxCounter
-            // if points left over loop again - continue until maxCounter = 0
-
-            // to counter biasing (if it exists) the first special types listed, we select the special type to generate randomly
-            // i.e. select agility to assign to first, then perception, etc
-
             while (maxCounter > 0)
             {
-                // var usedSpecialNames = SpecialSkills.SpecialNames;  // need to keep track of which types we have already iterated over. once we have used all once, reset this list and go until all points are spent 
                 var specialNames = new List<string>(SpecialSkills.SpecialNames);      // Get a new list to iterate over   TODO: this doesn't refresh after one loop
                 specialNames.Shuffle();                                               // shuffle/randomise list
 
                 for (var i = 6; i > -1; i--)
                 {
                     if (maxCounter <= 0) return specialTypesList;
-                    var tempCounter = maxCounter;           // set the number of points we have to assign on this iteration
-                    if (maxCounter >= 10) tempCounter = 10;    // (either the max(10) or whatever we have left in maxCounter
+                    var tempCounter = maxCounter;                       // set the number of points we have to assign on this iteration
+                    if (maxCounter >= 10) tempCounter = 10;                 // (either the max(10) or whatever we have left in maxCounter
 
-                    var rndSkillLevel = MyExtensions.GenerateRngInt(rng, tempCounter);      // get rnd number of skill points to give to special name
-                    if (maxCounter == 1) rndSkillLevel = 1; // rng machine will always return 0 if tempCounter == 1
+                    var rndSkillLevel = MyExtensions.GenerateRngInt(rng, tempCounter);       // get rnd number of skill points to give to special name
+                    if (maxCounter == 1) rndSkillLevel = 1;                                     // rng machine will always return 0 if tempCounter == 1
 
-                    // if the skill already exists, add to that instead
+                    // if the skill already exists, add to that instead of making a new one
                     if (specialTypesList.Any(x => x.SpecialName == specialNames[i]))
                     {
                         var index = specialTypesList.FindIndex(x => x.SpecialName == specialNames[i]);

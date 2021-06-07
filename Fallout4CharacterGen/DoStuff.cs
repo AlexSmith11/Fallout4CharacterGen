@@ -18,18 +18,21 @@ namespace Fallout4CharacterGen
         
         public async Task DoThings()
         {
-            var specialList = await _readerWriter.GetSpecialSkillData();
+            /*
+             * generate a special list
+             */
+            var perkList = await _readerWriter.GetAllSpecialPerks();
 
             // get random perk
             var rng = new Random();
-            var randomIndexSpecial = MyExtensions.GenerateRngInt(rng, specialList.Count);
-            var randomIndexPerk = MyExtensions.GenerateRngInt(rng, specialList[randomIndexSpecial].Rows.Count);
+            var randomIndexSpecial = MyExtensions.GenerateRngInt(rng, perkList.Count);
+            var randomIndexPerk = MyExtensions.GenerateRngInt(rng, perkList[randomIndexSpecial].Rows.Count);
             
-            Console.Write(specialList[randomIndexSpecial].SpecialName + ": ");
-            Console.WriteLine(specialList[randomIndexSpecial].Rows[randomIndexPerk].Name);
+            Console.Write(perkList[randomIndexSpecial].SpecialName + ": ");
+            Console.WriteLine(perkList[randomIndexSpecial].Rows[randomIndexPerk].Name);
 
             
-            var tempSpecialListRanks = await _specialManager.GenerateSpecialPoints();
+            var charactersSpecial = await _specialManager.GenerateSpecialPoints();
             
             // now need to match the two lists and merge them
             var gbfd = 1 + 4;

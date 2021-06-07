@@ -15,7 +15,7 @@ namespace Fallout4CharacterGen.Middleware
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<List<SpecialSkill>> GetSpecialSkillData()
+        public async Task<List<SpecialSkill>> GetAllSpecialPerks()
         {
             var allSpecialSkillsList = new List<SpecialSkill>();
             var specialNames = SpecialSkills.SpecialNames;
