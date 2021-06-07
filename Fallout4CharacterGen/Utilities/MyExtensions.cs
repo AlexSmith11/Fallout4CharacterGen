@@ -36,5 +36,16 @@ namespace Fallout4CharacterGen.Utilities
         {
             return listToClone.Select(item => (T)item.Clone()).ToList();
         }
+
+        /// <summary>
+        /// generate a thread-safe random number 
+        /// </summary>
+        /// <param name="rng"></param>
+        /// <param name="tempCounter"></param>
+        /// <returns></returns>
+        public static int GenerateRngInt(Random rng, int tempCounter)
+        {
+            return rng.Next(tempCounter);
+        }
     }
 }
