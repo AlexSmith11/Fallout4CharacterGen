@@ -6,12 +6,12 @@ namespace Fallout4CharacterGen.DatabaseSource.Local
 {
     public static class CsvReader
     {
-        public static List<SpecialPerkRow> LoadCsvData(string specialType)
+        public static List<SpecialPerk> LoadCsvData(string specialType)
         {
             const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\";
             var fileName = specialType + ".csv";
             var path = folderPath + fileName;
-            var specialSkill = new List<SpecialPerkRow>();
+            var specialSkill = new List<SpecialPerk>();
 
             using (var csvParser = new TextFieldParser(path))
             {
@@ -28,7 +28,7 @@ namespace Fallout4CharacterGen.DatabaseSource.Local
                     var fields = csvParser.ReadFields();
                     if (fields?.Length == 0) return null;
 
-                    var newRow = new SpecialPerkRow()
+                    var newRow = new SpecialPerk()
                     {
                         Name = fields[0],
                         SpecialRankRequirement = fields[1],

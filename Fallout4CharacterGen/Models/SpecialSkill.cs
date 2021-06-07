@@ -6,10 +6,10 @@ namespace Fallout4CharacterGen.Models
     {
         public string SpecialName { get; set; }
         public int SpecialLevel { get; set; }
-        public List<SpecialPerkRow> Rows { get; set; }
+        public List<SpecialPerk> Perks { get; set; }
     }
 
-    public class SpecialPerkRow
+    public class SpecialPerk
     {
         public string Name { get; set; }
         public string SpecialRankRequirement { get; set; }
@@ -17,5 +17,6 @@ namespace Fallout4CharacterGen.Models
         public string PlayerLevelRequirement { get; set; }
         public string Description { get; set; }
         public string FormId { get; set; }
+        public string ParentSpecialName { get; set; }
     }
 }

@@ -25,13 +25,13 @@ namespace Fallout4CharacterGen.Middleware
                 var tempSpecialPerkList = JsonParser.ReadSpecialSkillFromDisk(specialName);
                 var specialSkillsList = new SpecialSkill
                 {
-                    Rows = new List<SpecialPerkRow>(),
+                    Perks = new List<SpecialPerk>(),
                     SpecialName = specialName
                 };
 
                 foreach (var perk in tempSpecialPerkList)
                 {
-                    specialSkillsList.Rows.Add(perk);
+                    specialSkillsList.Perks.Add(perk);
                 }
 
                 allSpecialSkillsList.Add(specialSkillsList);

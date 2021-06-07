@@ -14,11 +14,11 @@ namespace Fallout4CharacterGen.DatabaseSource.Local
         /// </summary>
         /// <param name="csvRows"></param>
         /// <param name="specialType"></param>
-        public static void WriteToDisk(List<SpecialPerkRow> csvRows, string specialType)
+        public static void WriteToDisk(List<SpecialPerk> csvRows, string specialType)
         {
             var fileName = FolderPath + specialType + ".json";
             
-            var json = JsonSerializer.Serialize<List<SpecialPerkRow>>(csvRows);
+            var json = JsonSerializer.Serialize<List<SpecialPerk>>(csvRows);
             File.WriteAllText(fileName, json);
         }
 
@@ -27,14 +27,14 @@ namespace Fallout4CharacterGen.DatabaseSource.Local
         /// </summary>
         /// <param name="specialName"></param>
         /// <returns></returns>
-        public static List<SpecialPerkRow> ReadSpecialSkillFromDisk(string specialName)
+        public static List<SpecialPerk> ReadSpecialSkillFromDisk(string specialName)
         {
             var filePath = FolderPath + specialName + ".json";
             
             using (var streamReader = new StreamReader(filePath))
             {
                 var json = streamReader.ReadToEnd();
-                var specialPerks = JsonSerializer.Deserialize<List<SpecialPerkRow>>(json);
+                var specialPerks = JsonSerializer.Deserialize<List<SpecialPerk>>(json);
 
                 return specialPerks;
             }

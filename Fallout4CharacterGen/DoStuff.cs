@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Fallout4CharacterGen.Interfaces;
 using Fallout4CharacterGen.Middleware;
@@ -33,10 +34,10 @@ namespace Fallout4CharacterGen
             // get random perk
             var rng = new Random();
             var randomIndexSpecial = MyExtensions.GenerateRngInt(rng, perkList.Count);
-            var randomIndexPerk = MyExtensions.GenerateRngInt(rng, perkList[randomIndexSpecial].Rows.Count);
+            var randomIndexPerk = MyExtensions.GenerateRngInt(rng, perkList[randomIndexSpecial].Perks.Count);
             
             Console.Write(perkList[randomIndexSpecial].SpecialName + ": ");
-            Console.WriteLine(perkList[randomIndexSpecial].Rows[randomIndexPerk].Name);
+            Console.WriteLine(perkList[randomIndexSpecial].Perks[randomIndexPerk].Name);
             
             
             // now need to match the two lists and merge them(?)
@@ -48,9 +49,10 @@ namespace Fallout4CharacterGen
         /// generate a list of perks for the player, ordered by player level
         /// </summary>
         /// <returns></returns>
-        public async Task GeneratePerkLists(List<SpecialSkill> perkList, List<SpecialSkill> character)
+        public async Task GeneratePerkLists(List<SpecialSkill> perkList, List<SpecialSkill> characterSpecialSkills)
         {
             const int playerLevelCap = 80;  // make this changeable by user
+            var rng = new Random();
 
             // need perk lists of:
             // player lvl 1 - 5
@@ -65,18 +67,80 @@ namespace Fallout4CharacterGen
             // must also make sure SpecialRankRequirement is met (req strength == 6 to get string back)
             // data is given already in order
             
-            // new List<SpecialPerkRow> to contain all new perks - select ranges to display, don't need more than one list
+            // use characters special list to contain all new perks - select ranges to display, don't need more than one list
             // for loop? where i = the player lvl
             // add a perk that:
+            // - is not a duplicate
             // - has a player req < i
             // - has special rank < SpecialRankRequirement of perk
-            // - has to be either perk rank of 1 or rank of 2+ if there are already previous levels of same perk (1!)
+            // - has to be either perk rank of 1 or rank of previous + 1 if there are already previous levels of same perk (1!)
 
             // (1!): just skip the perk.
 
             for (var i = 0; i < playerLevelCap; i++)
             {
+                var randomSpecialIndex = 0;
+                var randomPerkIndex = 0;
                 
+                // check perk - if doesn't work, get different perk
+                var check = 0;
+                while (check == 0)
+                {
+                    // select a random perk
+                    var randomSpecialIndexTemp = MyExtensions.GenerateRngInt(rng, perkList.Count);
+                    var randomPerkIndexTemp = MyExtensions.GenerateRngInt(rng, perkList[randomSpecialIndexTemp].Perks.Count);
+
+                    var isPerkValid = true;
+                    var tempSpecialToAddTo = perkList[randomSpecialIndexTemp];
+                    var tempPerkToAdd = perkList[randomSpecialIndexTemp].Perks[randomPerkIndexTemp];
+                    var characterSpecialSkill = characterSpecialSkills.First(x => x.SpecialName.Equals(tempSpecialToAddTo.SpecialName));    // list of perks within the currently accessed special skill
+                    var characterPerks = characterSpecialSkill.Perks
+                        .Where(x => x.Name.Equals(tempPerkToAdd.Name)).OrderBy(x => x.PerkRank).ToList();    // perks we already have in the current special type
+                    
+                    foreach (var characterPerk in characterPerks)
+                    {
+                        if (characterPerk.FormId == tempPerkToAdd.FormId) isPerkValid = false;
+                    }
+                    if (!isPerkValid) continue;
+                    
+                    if (int.Parse(tempPerkToAdd.PlayerLevelRequirement) > i)
+                    {
+                        continue;
+                    }
+
+                    if (int.Parse(tempPerkToAdd.SpecialRankRequirement) > characterSpecialSkill.SpecialLevel)
+                    {
+                        continue;
+                    }
+
+                    var tempPerkToAddRank = int.Parse(tempPerkToAdd.PerkRank);
+                    if (tempPerkToAddRank != 1)
+                    {
+                        var currentPerkLevel = characterPerks.Count;
+                        if(currentPerkLevel + 1 != tempPerkToAddRank) continue;
+                    }
+                    
+                    // persist the perks selected
+                    randomSpecialIndex = randomSpecialIndexTemp;
+                    randomPerkIndex = randomPerkIndexTemp;
+                    check = 1;
+                }
+
+                var randomSpecialType = perkList[randomSpecialIndex];
+                var randomPerk = perkList[randomSpecialIndex].Perks[randomPerkIndex];
+                
+                // after checking perk, add it to appropriate special type in character
+                characterSpecialSkills.First(x => x.SpecialName.Equals(randomSpecialType.SpecialName)).Perks.Add(
+                    new SpecialPerk
+                    {
+                        Name = randomPerk.Name,
+                        SpecialRankRequirement = randomPerk.SpecialRankRequirement,
+                        PerkRank = randomPerk.PerkRank,
+                        PlayerLevelRequirement = randomPerk.PlayerLevelRequirement,
+                        Description = randomPerk.Description,
+                        FormId = randomPerk.FormId
+                    }
+                );
             }
         }
     }
