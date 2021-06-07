@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Fallout4CharacterGen.Utilities
 {
@@ -12,7 +13,7 @@ namespace Fallout4CharacterGen.Utilities
         /// </summary>
         /// <param name="list"></param>
         /// <typeparam name="T"></typeparam>
-        public static void Shuffle<T>(IList<T> list)
+        public static void Shuffle<T>(this IList<T> list)
         {
             var n = list.Count;
             while (n > 1)
@@ -23,6 +24,17 @@ namespace Fallout4CharacterGen.Utilities
                 list[k] = list[n];
                 list[n] = value;
             }
+        }
+        
+        /// <summary>
+        /// Clone a given list
+        /// </summary>
+        /// <param name="listToClone"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IList<T> Clone<T>(this IList<T> listToClone) where T: ICloneable
+        {
+            return listToClone.Select(item => (T)item.Clone()).ToList();
         }
     }
 }

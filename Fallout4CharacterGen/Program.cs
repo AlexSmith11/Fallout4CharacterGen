@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Fallout4CharacterGen.DatabaseSource.Local;
@@ -64,8 +63,8 @@ namespace Fallout4CharacterGen
             while (maxCounter > 0)
             {
                 // var usedSpecialNames = SpecialSkills.SpecialNames;  // need to keep track of which types we have already iterated over. once we have used all once, reset this list and go until all points are spent 
-                var specialNames = SpecialSkills.SpecialNames;      // Get a new list to iterate over   TODO: this doesn't refresh after one loop
-                MyExtensions.Shuffle(specialNames);                          // shuffle/randomise list
+                var specialNames = new List<string>(SpecialSkills.SpecialNames);      // Get a new list to iterate over   TODO: this doesn't refresh after one loop
+                specialNames.Shuffle();                                               // shuffle/randomise list
 
                 for (var i = 6; i > -1; i--)
                 {
