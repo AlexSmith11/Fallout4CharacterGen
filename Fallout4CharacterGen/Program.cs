@@ -15,7 +15,7 @@ namespace Fallout4CharacterGen
         private static async Task Main(string[] args)
         {
             var application = new DoStuff();
-            await application.DoThings();
+            await application.CreateCharacter();
         }
     }
 }

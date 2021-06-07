@@ -11,15 +11,19 @@ namespace Fallout4CharacterGen
         private readonly ICsvJsonReaderWriter _readerWriter = new CsvAndJsonReaderWriter();
         private readonly ISpecialManager _specialManager = new SpecialManager();
 
+        /// <summary>
+        /// This must be run once to populate the database
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadAndWriteData()
         {
             await _readerWriter.AskForFilename(); // Run the CSV & JSON reader writer program
         }
         
-        public async Task DoThings()
+        public async Task CreateCharacter()
         {
             /*
-             * generate a special list
+             * generate a characters special list
              */
             var perkList = await _readerWriter.GetAllSpecialPerks();
 
@@ -32,10 +36,24 @@ namespace Fallout4CharacterGen
             Console.WriteLine(perkList[randomIndexSpecial].Rows[randomIndexPerk].Name);
 
             
-            var charactersSpecial = await _specialManager.GenerateSpecialPoints();
+            var charactersSpecialRanks = await _specialManager.GenerateSpecialPoints();
             
             // now need to match the two lists and merge them
-            var gbfd = 1 + 4;
+        }
+
+        public async Task GeneratePerkLists()
+        {
+            // need perk lists of:
+            // player lvl 1 - 5
+            // player lvl 6 - 10
+            // player lvl 10 - 20
+            // player lvl 20 - 30
+            // player lvl 30 - 40
+            // player lvl 40+
+            
+            // new List<SpecialPerkRow> for each of these ranges
+            
+            // for loop? where i = the player lvl
         }
     }
 }
