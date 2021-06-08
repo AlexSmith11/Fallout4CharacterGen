@@ -12,9 +12,11 @@ The steps taken during this project:
 - Data formatting undertaken by me in Google Sheets to smooth out the data & produce a CSV file
 - CSV Parser and JSON serialiser made to produce JSON files for future JavaScript web usage
 - JSON deserialiser to read stored JSON
--
+- Randomised player character S.P.E.C.I.A.L. generator
+- Randomised player character valid perk generator
 
 # Explanation
+
 The two main ways a character is initially personalised is done is through the S.P.E.C.I.A.L. system, and the perk system.
 
 S.P.E.C.I.A.L. stands for:
@@ -44,5 +46,5 @@ For example: A build with stats of:
 
 Would be given to a character that would be considered clumsy, physically weak and socially inept, yet highly intelligent and lucky.
 
-The second way, perks, are much more specific and can be assigned to characters throughout the playthrough wih skill points.
+The second way, perks, are much more specific and can be assigned to characters throughout the playthrough with skill points.
 These skill points are given to the player whenever a character levels up.

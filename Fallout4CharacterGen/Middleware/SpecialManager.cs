@@ -37,6 +37,19 @@ namespace Fallout4CharacterGen.Middleware
             var maxCounter = 28;
             var specialTypesList = new List<SpecialSkill>();
             var rng = new Random();
+            
+            var tempSpecialNames = new List<SpecialInfo>(SpecialSkills.SpecialData());
+            
+            // populate list. this ofc makes a ton of the below redundant but i'm done for now
+            for (int i = 6; i > -1; i--)
+            {
+                specialTypesList.Add(new SpecialSkill
+                {
+                    SpecialName = tempSpecialNames[i].SpecialName,
+                    SpecialLevel = 1,
+                    SpecialId = tempSpecialNames[i].SpecialId
+                });
+            }
 
             while (maxCounter > 0)
             {
@@ -45,30 +58,18 @@ namespace Fallout4CharacterGen.Middleware
 
                 for (var i = 6; i > -1; i--)
                 {
+                    // if all points are used up early, we quit while making sure all 7 are added to list
                     if (maxCounter <= 0) return specialTypesList;
-                    var tempCounter = maxCounter;                       // set the number of points we have to assign on this iteration
+                    
+                    var tempCounter = maxCounter;                        // set the number of points we have to assign on this iteration
                     if (maxCounter >= 10) tempCounter = 10;                 // (either the max(10) or whatever we have left in maxCounter
 
-                    var rndSkillLevel = MyExtensions.GenerateRngInt(rng, tempCounter);       // get rnd number of skill points to give to special name
-                    if (maxCounter == 1) rndSkillLevel = 1;                                     // rng machine will always return 0 if tempCounter == 1
-                    if (rndSkillLevel == 0) continue;                                           // why keep going
-
-                    // if the skill already exists, add to that instead of making a new one
-                    if (specialTypesList.Any(x => x.SpecialName == specialNames[i].SpecialName))
-                    {
-                        var index = specialTypesList.FindIndex(x => x.SpecialName == specialNames[i].SpecialName);
-                        specialTypesList[index].SpecialLevel += rndSkillLevel;
-                    }
-                    else
-                    {
-                        specialTypesList.Add(new SpecialSkill
-                            {
-                                SpecialName = specialNames[i].SpecialName,
-                                SpecialLevel = rndSkillLevel,
-                                SpecialId = specialNames[i].SpecialId
-                            });
-                    }
-
+                    var rndSkillLevel = MyExtensions.GenerateRngInt(rng, tempCounter);          // get rnd number of skill points to give to special name
+                    if (rndSkillLevel <= 1) rndSkillLevel = 1;                                     // rng machine will always return 0 if tempCounter == 1
+                    
+                    var index = specialTypesList.FindIndex(x => x.SpecialName == specialNames[i].SpecialName);
+                    specialTypesList[index].SpecialLevel += rndSkillLevel;
+                    
                     specialNames.Remove(specialNames[i]);       // remove name of special type from list of types to create/add to so we don't use it again on this loop
                     maxCounter -= rndSkillLevel;                // deduct points used from total count left to spend
                 }
