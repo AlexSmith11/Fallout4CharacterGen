@@ -40,7 +40,7 @@ namespace Fallout4CharacterGen.Middleware
 
             while (maxCounter > 0)
             {
-                var specialNames = new List<string>(SpecialSkills.SpecialNames);      // Get a new list to iterate over   TODO: this doesn't refresh after one loop
+                var specialNames = new List<SpecialInfo>(SpecialSkills.SpecialData());      // Get a new list to iterate over
                 specialNames.Shuffle();                                               // shuffle/randomise list
 
                 for (var i = 6; i > -1; i--)
@@ -51,17 +51,22 @@ namespace Fallout4CharacterGen.Middleware
 
                     var rndSkillLevel = MyExtensions.GenerateRngInt(rng, tempCounter);       // get rnd number of skill points to give to special name
                     if (maxCounter == 1) rndSkillLevel = 1;                                     // rng machine will always return 0 if tempCounter == 1
+                    if (rndSkillLevel == 0) continue;                                           // why keep going
 
                     // if the skill already exists, add to that instead of making a new one
-                    if (specialTypesList.Any(x => x.SpecialName == specialNames[i]))
+                    if (specialTypesList.Any(x => x.SpecialName == specialNames[i].SpecialName))
                     {
-                        var index = specialTypesList.FindIndex(x => x.SpecialName == specialNames[i]);
+                        var index = specialTypesList.FindIndex(x => x.SpecialName == specialNames[i].SpecialName);
                         specialTypesList[index].SpecialLevel += rndSkillLevel;
                     }
                     else
                     {
                         specialTypesList.Add(new SpecialSkill
-                            {SpecialName = specialNames[i], SpecialLevel = rndSkillLevel});
+                            {
+                                SpecialName = specialNames[i].SpecialName,
+                                SpecialLevel = rndSkillLevel,
+                                SpecialId = specialNames[i].SpecialId
+                            });
                     }
 
                     specialNames.Remove(specialNames[i]);       // remove name of special type from list of types to create/add to so we don't use it again on this loop
@@ -79,15 +84,11 @@ namespace Fallout4CharacterGen.Middleware
         /// restructuring the data models, such as having a tree structure ordered by special level and then perk req.
         ///
         /// TODO: make sure that the minimum special level is 1, not 0
+        /// TODO: refactor this so that it makes way more sense
         /// </summary>
         /// <returns></returns>
         public async Task<List<SpecialSkill>> GeneratePerkLists(List<SpecialSkill> perkList, List<SpecialSkill> characterSpecialSkills)
         {
-            if(perkList is null || !perkList.Any() || characterSpecialSkills is null || !characterSpecialSkills.Any()) return null;
-
-            const int playerLevelCap = 40;  // make this changeable by user
-            var rng = new Random();
-            
             // need perk lists of:
             // player lvl 1 - 5
             // player lvl 6 - 10
@@ -110,6 +111,11 @@ namespace Fallout4CharacterGen.Middleware
             // - has to be either perk rank of 1 or rank of previous + 1 if there are already previous levels of same perk (1!)
 
             // (1!): just skip the perk.
+            
+            if(perkList is null || !perkList.Any() || characterSpecialSkills is null || !characterSpecialSkills.Any()) return null;
+
+            const int playerLevelCap = 40;  // make this changeable by user
+            var rng = new Random();
 
             for (var i = 1; i < playerLevelCap + 1; i++)    // add one because of array index stuff 
             {
@@ -162,6 +168,9 @@ namespace Fallout4CharacterGen.Middleware
                         if(currentPerkLevel + 1 != tempPerkToAddRank) continue;
                     }
                     
+                    // set special skill id
+                    characterSpecialSkill.SpecialId = tempSpecialToAddTo.SpecialId;
+
                     // persist the perks selected
                     randomSpecialIndex = randomSpecialIndexTemp;
                     randomPerkIndex = randomPerkIndexTemp;
@@ -185,7 +194,7 @@ namespace Fallout4CharacterGen.Middleware
                 );
             }
 
-            return characterSpecialSkills;
+            return characterSpecialSkills.OrderBy(x => x.SpecialId).ToList();
         }
     }
 }

@@ -4,6 +4,11 @@ namespace Fallout4CharacterGen.Models
 {
     public class SpecialSkill
     {
+        public SpecialSkill()
+        {
+            this.SpecialLevel = 1;
+        }
+        public int SpecialId { get; set; }
         public string SpecialName { get; set; }
         public int SpecialLevel { get; set; } = 1;
         public List<SpecialPerk> Perks { get; set; }

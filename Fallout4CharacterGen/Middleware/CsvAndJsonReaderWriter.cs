@@ -20,21 +20,23 @@ namespace Fallout4CharacterGen.Middleware
             var allSpecialSkillsList = new List<SpecialSkill>();
             var specialNames = SpecialSkills.SpecialNames;
 
-            foreach (var specialName in specialNames)
+            for (var i = 0; i < specialNames.Count; i++)
             {
+                var specialName = specialNames[i];
                 var tempSpecialPerkList = JsonParser.ReadSpecialSkillFromDisk(specialName);
                 var specialSkillsList = new SpecialSkill
                 {
                     Perks = new List<SpecialPerk>(),
-                    SpecialName = specialName
+                    SpecialName = specialName,
                 };
 
                 foreach (var perk in tempSpecialPerkList)
                 {
                     specialSkillsList.Perks.Add(perk);
                 }
-
+                
                 allSpecialSkillsList.Add(specialSkillsList);
+                allSpecialSkillsList[i].SpecialId = i;
             }
 
             return allSpecialSkillsList;
