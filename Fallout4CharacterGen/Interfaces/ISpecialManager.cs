@@ -7,5 +7,7 @@ namespace Fallout4CharacterGen.Interfaces
     public interface ISpecialManager
     {
         Task<List<SpecialSkill>> GenerateSpecialPoints();
+
+        Task<List<SpecialSkill>> GeneratePerkLists(List<SpecialSkill> perkList, List<SpecialSkill> characterSpecialSkills);
     }
 }
