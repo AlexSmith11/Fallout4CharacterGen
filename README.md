@@ -6,7 +6,7 @@ This is supposed to or going to be a basic RPG character generator.
 
 Currently this generator will be used for Fallout 4, which has various ways to tailor your character.
 
-The steps taken during this project:
+### The steps taken during this project:
 
 - Web data scraper written to get the S.P.E.C.I.A.L. and perk data from the publicly available source at https://fallout.fandom.com/wiki
 - Data formatting undertaken by me in Google Sheets to smooth out the data & produce a CSV file
@@ -16,9 +16,9 @@ The steps taken during this project:
 - Randomised player character S.P.E.C.I.A.L. generator
 - Randomised player character valid perk generator
 
-TODO:
+### TODO:
 
-- Host output of the generator for a front-end to pickup
+- Host output of the generator for a front-end to pickup. Probably with AWS
 - Creation of a frontend in React/NextJS. This will include ways to manipulate the data in various ways
 
 # Gameplay Explanation
