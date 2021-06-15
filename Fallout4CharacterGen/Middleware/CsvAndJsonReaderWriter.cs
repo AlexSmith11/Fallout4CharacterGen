@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Fallout4CharacterGen.DatabaseSource.Local;
+using Fallout4CharacterGen.DatabaseSource.Remote;
 using Fallout4CharacterGen.Interfaces;
 using Fallout4CharacterGen.Models;
 
@@ -23,7 +24,7 @@ namespace Fallout4CharacterGen.Middleware
             for (var i = 0; i < specialNames.Count; i++)
             {
                 var specialName = specialNames[i];
-                var tempSpecialPerkList = JsonParser.ReadSpecialSkillFromDisk(specialName);
+                var tempSpecialPerkList = await GetApiData.GetSpecialJson(specialName);
                 var specialSkillsList = new SpecialSkill
                 {
                     Perks = new List<SpecialPerk>(),
@@ -105,7 +106,7 @@ namespace Fallout4CharacterGen.Middleware
         /// <returns></returns>
         private static bool CheckIfCsvFileExists(string specialType)
         {
-            const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\";
+            const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\csv\";
             var fileName = specialType + ".csv";
             var path = folderPath + fileName;
 

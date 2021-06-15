@@ -36,10 +36,9 @@ namespace Fallout4CharacterGen.Middleware
         {
             var maxCounter = 28;
             var specialTypesList = new List<SpecialSkill>();
-            var rng = new Random();
-            
             var tempSpecialNames = new List<SpecialInfo>(SpecialSkills.SpecialData());
-            
+            var rng = new Random();
+
             // populate list. this ofc makes a ton of the below redundant but i'm done for now
             for (int i = 6; i > -1; i--)
             {
@@ -90,14 +89,6 @@ namespace Fallout4CharacterGen.Middleware
         /// <returns></returns>
         public async Task<List<SpecialSkill>> GeneratePerkLists(List<SpecialSkill> perkList, List<SpecialSkill> characterSpecialSkills)
         {
-            // need perk lists of:
-            // player lvl 1 - 5
-            // player lvl 6 - 10
-            // player lvl 10 - 20
-            // player lvl 20 - 30
-            // player lvl 30 - 40
-            // player lvl 40+
-
             // could just get a list of 40+ perks ordered by player lvl req. (PlayerLevelRequirement)
             // need to make sure we get perk ranks in order - can't just have local leader 2 without rank 1. (PerkRank)
             // must also make sure SpecialRankRequirement is met (req strength == 6 to get string back)
@@ -139,28 +130,24 @@ namespace Fallout4CharacterGen.Middleware
                     characterSpecialSkill.Perks ??= new List<SpecialPerk>();    // if we do not have any perks yet, pass
                     
                     var characterPerks = characterSpecialSkill.Perks
-                        .Where(x => x.Name.Equals(tempPerkToAdd.Name)).OrderBy(x => x.PerkRank).ToList();    // perks we already have in the current special type
+                        .Where(x => x.Name.Equals(tempPerkToAdd.Name))
+                        .OrderBy(x => x.PerkRank)
+                        .ToList();    // perks we already have in the current special type
                     
                     // set default values just in case
                     if (tempPerkToAdd.PlayerLevelRequirement == "") tempPerkToAdd.PlayerLevelRequirement = "1";
                     if (tempPerkToAdd.SpecialRankRequirement == "") tempPerkToAdd.SpecialRankRequirement = "1";
                     
-                    foreach (var characterPerk in characterPerks)
-                    {
-                        if (characterPerk.FormId == tempPerkToAdd.FormId) isPerkValid = false;
-                    }
+                    foreach (var characterPerk in characterPerks) 
+                        if (characterPerk.FormId == tempPerkToAdd.FormId) 
+                            isPerkValid = false;
+                    
                     if (!isPerkValid) continue;
                     
                     var temp = int.Parse(tempPerkToAdd.PlayerLevelRequirement);
-                    if (temp > i)
-                    {
-                        continue;
-                    }
+                    if (temp > i) continue;
                     
-                    if (int.Parse(tempPerkToAdd.SpecialRankRequirement) > characterSpecialSkill.SpecialLevel)
-                    {
-                        continue;
-                    }
+                    if (int.Parse(tempPerkToAdd.SpecialRankRequirement) > characterSpecialSkill.SpecialLevel) continue;
 
                     var tempPerkToAddRank = int.Parse(tempPerkToAdd.PerkRank);
                     if (tempPerkToAddRank != 1)

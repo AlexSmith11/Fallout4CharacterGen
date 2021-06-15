@@ -8,7 +8,7 @@ namespace Fallout4CharacterGen.DatabaseSource.Local
     {
         public static List<SpecialPerk> LoadCsvData(string specialType)
         {
-            const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\";
+            const string folderPath = @"C:\Users\alexs\Desktop\fallout4_csv\special\csv\";
             var fileName = specialType + ".csv";
             var path = folderPath + fileName;
             var specialSkill = new List<SpecialPerk>();
