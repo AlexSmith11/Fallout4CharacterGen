@@ -11,11 +11,17 @@ The steps taken during this project:
 - Web data scraper written to get the S.P.E.C.I.A.L. and perk data from the publicly available source at https://fallout.fandom.com/wiki
 - Data formatting undertaken by me in Google Sheets to smooth out the data & produce a CSV file
 - CSV Parser and JSON serialiser made to produce JSON files for future JavaScript web usage
+- Hosting of JSON on GitHub Pages
 - JSON deserialiser to read stored JSON
 - Randomised player character S.P.E.C.I.A.L. generator
 - Randomised player character valid perk generator
 
-# Explanation
+TODO:
+
+- Host output of the generator for a front-end to pickup
+- Creation of a frontend in React/NextJS. This will include ways to manipulate the data in various ways
+
+# Gameplay Explanation
 
 The two main ways a character is initially personalised is done is through the S.P.E.C.I.A.L. system, and the perk system.
 
@@ -48,3 +54,4 @@ Would be given to a character that would be considered clumsy, physically weak a
 
 The second way, perks, are much more specific and can be assigned to characters throughout the playthrough with skill points.
 These skill points are given to the player whenever a character levels up.
+For example, if the character is level 18, they will have had 18 points to spend on perks.
