@@ -8,7 +8,7 @@ This project was undertaken in order to learn about data handling. Transforming 
 
 Currently this generator will be used for Fallout 4, which has various ways to tailor your character.
 
-The steps taken during this project:
+### The steps taken during this project:
 
 - Web data scraper written to get the S.P.E.C.I.A.L. and perk data from the publicly available source at https://fallout.fandom.com/wiki
 - Data formatting undertaken by me in Google Sheets to smooth out the data & produce a CSV file
@@ -18,10 +18,10 @@ The steps taken during this project:
 - Randomised player character S.P.E.C.I.A.L. generator
 - Randomised player character valid perk generator
 
-TODO:
+### TODO:
 
 - Host output of the generator for a front-end to pickup
-- Create a sorted for the list of perks. Currently they already are but what if they are not?  
+- Create a sorted for the list of perks. Currently they already are but what if they are not?
 - Creation of a frontend in React/NextJS. This will include ways to manipulate the data in various ways
 
 S.P.E.C.I.A.L. hosted on: https://github.com/AlexSmith11/fallout4_data
