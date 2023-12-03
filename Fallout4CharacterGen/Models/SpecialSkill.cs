@@ -2,11 +2,11 @@
 
 namespace Fallout4CharacterGen.Models
 {
+    /// <summary>
+    /// A SPECIAL Subclass, e.g. luck.
+    /// </summary>
     public class SpecialSkill
     {
-        /// <summary>
-        /// A SPECIAL Subclass, e.g. luck.
-        /// </summary>
         public SpecialSkill()
         {
             this.SpecialLevel = 1;

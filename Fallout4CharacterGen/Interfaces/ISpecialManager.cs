@@ -8,6 +8,6 @@ namespace Fallout4CharacterGen.Interfaces
     {
         Task<List<SpecialSkill>> GenerateSpecialPoints();
 
-        Task<List<SpecialSkill>> GeneratePerkLists(List<SpecialSkill> perkList, List<SpecialSkill> characterSpecialSkills);
+        Task<List<SpecialSkill>> GeneratePerkLists(List<SpecialSkill> allPerks, List<SpecialSkill> characterSpecialSkills);
     }
 }

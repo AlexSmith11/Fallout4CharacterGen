@@ -12,13 +12,22 @@ namespace Fallout4CharacterGen.Middleware
     public class SpecialManager : ISpecialManager
     {
         /// <summary>
+        /// <para>
+        /// Create a SPECIAL list and assign them points.
+        /// </para>
+        /// </summary>
+        /// 
+        /// <para>
         /// rules:
-        /// - all special skills start at: 1
-        /// - max number of points spent (so, the characters level): 28
-        /// - max any special skill can be: 10
+        /// - all special skills start at: 1 (STR: 1, PER: 1, etc), with maximum of 10
+        /// - max number of points able to be spent at the start of the game: 28
+        /// </para>
         ///
+        /// <para>
         /// changed Random.Next() implementation due to thread issues. See here: https://csharpindepth.com/Articles/Random
-        ///
+        /// </para>
+        /// 
+        /// <code>
         /// method:
         /// if maxCounter > 10:
         /// assign random num between 1 - 10 to current special type
@@ -26,13 +35,15 @@ namespace Fallout4CharacterGen.Middleware
         /// if maxCounter is smaller than 10:
         /// assign random num between 1 - maxCounter
         /// if points left over loop again - continue until maxCounter = 0
-        /// 
+        /// </code>
+        ///
+        /// <para>
         /// to counter biasing (if it exists) the first special types listed, we select the special type to generate randomly
         /// i.e. select agility to assign to first, then perception, etc
         ///
         /// TODO: Make max counter an input from the user.
         /// 
-        /// </summary>
+        /// </para>
         /// <returns>list of special rankings</returns>
         public async Task<List<SpecialSkill>> GenerateSpecialPoints()
         {
@@ -41,7 +52,8 @@ namespace Fallout4CharacterGen.Middleware
             var tempSpecialNames = new List<SpecialInfo>(SpecialSkills.SpecialData());
             var rng = new Random();
 
-            // populate list. this ofc makes a ton of the below redundant but i'm done for now
+            // Create a list of 7 Special classes (Str, Per, etc)
+            // TODO: Why on earth are we doing this instead of just using SpecialSkill class? 3am things.
             for (int i = 6; i > -1; i--)
             {
                 specialTypesList.Add(new SpecialSkill
@@ -55,7 +67,7 @@ namespace Fallout4CharacterGen.Middleware
             while (maxCounter > 0)
             {
                 var specialNames = new List<SpecialInfo>(SpecialSkills.SpecialData());      // Get a new list to iterate over
-                specialNames.Shuffle();                                               // shuffle/randomise list
+                specialNames.Shuffle();
 
                 for (var i = 6; i > -1; i--)
                 {
@@ -78,40 +90,50 @@ namespace Fallout4CharacterGen.Middleware
 
             return specialTypesList;
         }
-        
+
         /// <summary>
-        /// generate a list of perks for the player, ordered by player level
-        ///
-        /// WARNING: this method is extremely brute-forcey & wasteful. there are far better ways to do this by
+        /// <para>
+        /// Generate a list of perks for the player, and adds them to the players SPECIAL tree.
+        /// </para>
+        /// 
+        /// <para>
+        /// WARNING: this method is extremely brute-force-y and wasteful. there are far better ways to do this by
         /// restructuring the data models, such as having a tree structure ordered by special level and then perk req.
-        ///
+        /// </para>
+        /// 
+        /// <para>
+        /// could just get a list of 40+ perks ordered by player lvl req. (PlayerLevelRequirement)
+        /// need to make sure we get perk ranks in order - can't just have local leader 2 without rank 1. (PerkRank)
+        /// must also make sure SpecialRankRequirement is met (req strength == 6 to get string back)
+        /// data is given already in order
+        /// </para>
+        /// 
+        /// <code>
+        /// Rules:
+        /// use characters special list to contain all new perks - select ranges to display, don't need more than one list
+        /// for loop? where i = the player lvl
+        /// add a perk that:
+        /// - is not a duplicate
+        /// - has a player req &lt; i
+        /// - has special rank &lt; SpecialRankRequirement of perk
+        /// - has to be either perk rank of 1 or rank of previous + 1 if there are already previous levels of same perk (1!)
+        /// </code>
+        /// 
         /// TODO: make sure that the minimum special level is 1, not 0
         /// TODO: refactor this so that it makes way more sense
         /// </summary>
+        /// 
+        /// <param name="allPerks">A list of SPECIAL with NO assigned values, plus EVERY perk that each SPECIAL can have.</param>
+        /// <param name="characterSpecialSkills">List of SPECIAL with generated values for each, with NULL perk data</param>
         /// <returns></returns>
-        public async Task<List<SpecialSkill>> GeneratePerkLists(List<SpecialSkill> perkList, List<SpecialSkill> characterSpecialSkills)
+        public async Task<List<SpecialSkill>> GeneratePerkLists(List<SpecialSkill> allPerks, List<SpecialSkill> characterSpecialSkills)
         {
-            // could just get a list of 40+ perks ordered by player lvl req. (PlayerLevelRequirement)
-            // need to make sure we get perk ranks in order - can't just have local leader 2 without rank 1. (PerkRank)
-            // must also make sure SpecialRankRequirement is met (req strength == 6 to get string back)
-            // data is given already in order
-            
-            // use characters special list to contain all new perks - select ranges to display, don't need more than one list
-            // for loop? where i = the player lvl
-            // add a perk that:
-            // - is not a duplicate
-            // - has a player req < i
-            // - has special rank < SpecialRankRequirement of perk
-            // - has to be either perk rank of 1 or rank of previous + 1 if there are already previous levels of same perk (1!)
+            if(allPerks is null || !allPerks.Any() || characterSpecialSkills is null || !characterSpecialSkills.Any()) return null;
 
-            // (1!): just skip the perk.
-            
-            if(perkList is null || !perkList.Any() || characterSpecialSkills is null || !characterSpecialSkills.Any()) return null;
-
-            const int playerLevelCap = 40;  // make this changeable by user
+            const int playerLevelCap = 40;  // TODO: make this changeable by user
             var rng = new Random();
 
-            for (var i = 1; i < playerLevelCap + 1; i++)    // add one because of array index stuff 
+            for (var i = 1; i < playerLevelCap + 1; i++)    // add one because of array index stuff
             {
                 var randomSpecialIndex = 0;
                 var randomPerkIndex = 0;
@@ -121,12 +143,12 @@ namespace Fallout4CharacterGen.Middleware
                 while (check == 0)
                 {
                     // select a random perk
-                    var randomSpecialIndexTemp = MyExtensions.GenerateRngInt(rng, perkList.Count);
-                    var randomPerkIndexTemp = MyExtensions.GenerateRngInt(rng, perkList[randomSpecialIndexTemp].Perks.Count);
+                    var randomSpecialIndexTemp = MyExtensions.GenerateRngInt(rng, allPerks.Count);
+                    var randomPerkIndexTemp = MyExtensions.GenerateRngInt(rng, allPerks[randomSpecialIndexTemp].Perks.Count);
 
                     var isPerkValid = true;
-                    var tempSpecialToAddTo = perkList[randomSpecialIndexTemp];
-                    var tempPerkToAdd = perkList[randomSpecialIndexTemp].Perks[randomPerkIndexTemp];
+                    var tempSpecialToAddTo = allPerks[randomSpecialIndexTemp];
+                    var tempPerkToAdd = allPerks[randomSpecialIndexTemp].Perks[randomPerkIndexTemp];
                     var characterSpecialSkill = characterSpecialSkills.FirstOrDefault(x => x.SpecialName.Equals(tempSpecialToAddTo.SpecialName));    // list of perks within the currently accessed special skill
                     if(characterSpecialSkill is null) continue;
                     characterSpecialSkill.Perks ??= new List<SpecialPerk>();    // if we do not have any perks yet, pass
@@ -167,8 +189,8 @@ namespace Fallout4CharacterGen.Middleware
                     check = 1;  // can't add the perk until all previous checks have been made
                 }
 
-                var randomSpecialType = perkList[randomSpecialIndex];
-                var randomPerk = perkList[randomSpecialIndex].Perks[randomPerkIndex];
+                var randomSpecialType = allPerks[randomSpecialIndex];
+                var randomPerk = allPerks[randomSpecialIndex].Perks[randomPerkIndex];
                 
                 // after checking perk, add it to appropriate special type in character
                 characterSpecialSkills.First(x => x.SpecialName.Equals(randomSpecialType.SpecialName)).Perks.Add(

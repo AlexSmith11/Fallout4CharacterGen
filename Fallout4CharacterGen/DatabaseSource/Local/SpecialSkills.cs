@@ -5,6 +5,10 @@ namespace Fallout4CharacterGen.DatabaseSource.Local
 {
     public static class SpecialSkills
     {
+        /// <summary>
+        /// Create a list of <value>SpecialInfo</value>'s & populates then with their Names and Id.
+        /// </summary>
+        /// <returns></returns>
         public static List<SpecialInfo> SpecialData()
         {
             var newSpecialData = SpecialNames;

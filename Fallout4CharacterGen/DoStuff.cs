@@ -15,7 +15,9 @@ namespace Fallout4CharacterGen
         private readonly ISpecialManager _specialManager = new SpecialManager();
 
         /// <summary>
-        /// This must be run once to populate the database
+        /// This must be run once to populate the database.
+        ///
+        /// No longer needed as the data has been processed and is now hosted on my GitHub.
         /// </summary>
         /// <returns></returns>
         public async Task LoadAndWriteData()
@@ -29,7 +31,10 @@ namespace Fallout4CharacterGen
         /// Download a list of perk information from the API.
         ///
         /// Step 2)
-        /// Generate the list of a characters SPECIAL perks.
+        /// Generate the list of a characters SPECIAL points.
+        ///
+        /// Step 3)
+        /// 
         /// </summary>
         /// <returns></returns>
         public async Task CreateCharacter()
@@ -37,15 +42,11 @@ namespace Fallout4CharacterGen
             // create a character
             var character = new Character();
             
-            /*
-             * Generate a characters special list.
-             * TODO: Refactor into the generation of the characters perks?
-             */
-            var perkList = await _readerWriter.GetAllSpecialPerks();
+            var allPerks = await _readerWriter.GetAllSpecialPerks();     //TODO: Refactor into the generation of the characters perks?
             var charactersSpecialRanks = await _specialManager.GenerateSpecialPoints();
 
-            var characterWithPerks = await _specialManager.GeneratePerkLists(perkList, charactersSpecialRanks);
-            if (characterWithPerks.Contains(null)) return; // does this actually work ????? lmao
+            var characterWithPerks = await _specialManager.GeneratePerkLists(allPerks, charactersSpecialRanks);
+            if (characterWithPerks.Contains(null)) return;
 
             Console.Write(characterWithPerks[3].SpecialName + ": ");
             Console.WriteLine(characterWithPerks[3].Perks.First().Name);
