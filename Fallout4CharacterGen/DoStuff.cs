@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fallout4CharacterGen.DatabaseSource.Local;
 using Fallout4CharacterGen.Interfaces;
 using Fallout4CharacterGen.Middleware;
 using Fallout4CharacterGen.Models;
@@ -34,7 +35,13 @@ namespace Fallout4CharacterGen
         /// Generate the list of a characters SPECIAL points.
         ///
         /// Step 3)
-        /// 
+        /// Generate a perks list of a given character based on their SPECIAL points.
+        ///
+        /// Step 4)
+        /// Build the rest of the char - a name, home, etc.
+        ///
+        /// Step 5)
+        /// Generate a JSON of the character to give to the front end.
         /// </summary>
         /// <returns></returns>
         public async Task CreateCharacter()
@@ -51,8 +58,7 @@ namespace Fallout4CharacterGen
             Console.Write(characterWithPerks[3].SpecialName + ": ");
             Console.WriteLine(characterWithPerks[3].Perks.First().Name);
             Console.Write("The special level is: " + characterWithPerks[3].SpecialLevel);
-
-
+            
             character.Special = characterWithPerks;
 
             /*
@@ -67,10 +73,15 @@ namespace Fallout4CharacterGen
              * - faction
              * - kleptomaniac (bool)
              */
-            
-            CharacterAssigner.getCompanion(character);
 
+            character.Name = await _readerWriter.AskForCharacterName();
+
+            // TODO: Hyper inefficient - should not need to send the whole character only to assign a string!
+            CharacterBuilder.getCompanion(character);
+            CharacterBuilder.getHomeSettlement(character);
             
+            // Export character Data for frontend:
+            JsonParser.WriteCharacterToDisk(character, "player1");
         }
     }
 }

@@ -4,7 +4,7 @@ using Fallout4CharacterGen.Models;
 
 namespace Fallout4CharacterGen.Middleware
 {
-    public static class CharacterAssigner
+    public static class CharacterBuilder
     {
         public static void getCompanion(Character character)
         {

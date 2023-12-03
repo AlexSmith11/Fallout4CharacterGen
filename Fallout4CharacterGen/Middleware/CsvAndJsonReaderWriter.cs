@@ -51,7 +51,17 @@ namespace Fallout4CharacterGen.Middleware
         }
 
         /// <summary>
-        /// Ask the user for file names
+        /// Ask the user for a character name
+        /// </summary>
+        /// <returns></returns>
+        public async Task<string> AskForCharacterName()
+        {
+            Console.Write("Please enter your characters name: ");
+            return Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Ask the user for the first file (SPECIAL) name
         /// </summary>
         /// <returns></returns>
         public async Task AskForFilename()
@@ -90,14 +100,14 @@ namespace Fallout4CharacterGen.Middleware
                 return;
             }
 
-            JsonParser.WriteToDisk(data, userInputSpecialType);
+            JsonParser.WriteSpecialPerkListToDisk(data, userInputSpecialType);
 
             var userInput = await AskForAnotherFilename();
             if (userInput == "y") await AskForFilename();
         }
 
         /// <summary>
-        /// Ask the user for another filename
+        /// Ask the user for other filenames
         /// </summary>
         /// <returns></returns>
         private static async Task<string> AskForAnotherFilename()

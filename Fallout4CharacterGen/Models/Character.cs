@@ -8,6 +8,7 @@ namespace Fallout4CharacterGen.Models
     public class Character
     {
         public List<SpecialSkill> Special { get; set; }
+        public string Name { get; set; }
         
         public string Companion { get; set; }
         

@@ -11,6 +11,12 @@ namespace Fallout4CharacterGen.Interfaces
         /// </summary>
         /// <returns></returns>
         public Task<List<SpecialSkill>> GetAllSpecialPerks();
+
+        /// <summary>
+        /// Return the users chosen character name
+        /// </summary>
+        /// <returns></returns>
+        public Task<string> AskForCharacterName();
         
         /// <summary>
         /// generate special perks from CSVs
