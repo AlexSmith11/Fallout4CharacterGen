@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "LRutGUx5BXRY4mE0jHB0MRzY52LrusHmTq9lIHAMX0gf3PqZWe6oiTir2jaiH4qcbx+22uLPO1sbWFAW6pA4oQ==",
+  "dgSpecHash": "9Hxl55iK15nD+5K0VxiXJzug/e+qncuF7qMb3+PPFh4YTisVl2CGH4zEnZfEDgWMfkv4cAEDJx3Q25VZtiAcxg==",
   "success": true,
   "projectFilePath": "C:\\Users\\alexs\\Documents\\doodles\\Fallout4CharacterGen\\Fallout4CharacterGen\\Fallout4CharacterGen.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\alexs\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.17\\microsoft.netcore.app.host.win-x64.5.0.17.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -39,5 +39,7 @@ namespace Fallout4CharacterGen.DatabaseSource.Local
                 return specialPerks;
             }
         }
+        
+        // TODO: Parse character obj to JSON to send to front end
     }
 }

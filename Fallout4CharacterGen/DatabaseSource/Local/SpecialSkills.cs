@@ -9,7 +9,7 @@ namespace Fallout4CharacterGen.DatabaseSource.Local
         {
             var newSpecialData = SpecialNames;
             var specialData = new List<SpecialInfo>();
-            
+
             for (var i = 0; i < newSpecialData.Count; i++)
             {
                 var specialType = new SpecialInfo()
@@ -17,12 +17,13 @@ namespace Fallout4CharacterGen.DatabaseSource.Local
                     SpecialId = i,
                     SpecialName = newSpecialData[i]
                 };
-                
+
                 specialData.Add(specialType);
             }
 
             return specialData;
         }
+
         public static List<string> SpecialNames { get; } = new()
             {"strength", "perception", "endurance", "charisma", "intelligence", "agility", "luck"};
     }

@@ -9,10 +9,17 @@ using Fallout4CharacterGen.Models;
 
 namespace Fallout4CharacterGen.Middleware
 {
+    /// <summary>
+    /// I only managed to get the original data in CSV format.
+    /// Therefore the 'AskForFilename' path is only to be used once, in the projects initial setup in order to generate
+    /// the JSON files that would be hosted on the API. 
+    /// </summary>
     public class CsvAndJsonReaderWriter : ICsvJsonReaderWriter
     {
         /// <summary>
-        /// inefficient method that returns all special type perks
+        /// Inefficient method that returns a list of all SPECIAL data (strength & all it's perks, perception, etc).
+        ///
+        /// Makes 7 API calls for each SPECIAL subclasses to get all associated perks.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
@@ -44,7 +51,7 @@ namespace Fallout4CharacterGen.Middleware
         }
 
         /// <summary>
-        /// Ask the user for a file name
+        /// Ask the user for file names
         /// </summary>
         /// <returns></returns>
         public async Task AskForFilename()

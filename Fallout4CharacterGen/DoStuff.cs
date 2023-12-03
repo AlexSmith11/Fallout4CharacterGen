@@ -24,26 +24,52 @@ namespace Fallout4CharacterGen
         }
         
         /// <summary>
-        /// generate a character
+        /// Generate a character.
+        /// Step 1)
+        /// Download a list of perk information from the API.
+        ///
+        /// Step 2)
+        /// Generate the list of a characters SPECIAL perks.
         /// </summary>
         /// <returns></returns>
         public async Task CreateCharacter()
         {
+            // create a character
+            var character = new Character();
+            
             /*
-             * generate a characters special list
+             * Generate a characters special list.
+             * TODO: Refactor into the generation of the characters perks?
              */
             var perkList = await _readerWriter.GetAllSpecialPerks();
             var charactersSpecialRanks = await _specialManager.GenerateSpecialPoints();
 
-            var character = await _specialManager.GeneratePerkLists(perkList, charactersSpecialRanks);
-            if (character.Contains(null)) return; // does this actually work ????? lmao
+            var characterWithPerks = await _specialManager.GeneratePerkLists(perkList, charactersSpecialRanks);
+            if (characterWithPerks.Contains(null)) return; // does this actually work ????? lmao
 
-            Console.Write(character[3].SpecialName + ": ");
-            Console.Write(character[3].Perks.First().Name);
-            
+            Console.Write(characterWithPerks[3].SpecialName + ": ");
+            Console.WriteLine(characterWithPerks[3].Perks.First().Name);
+            Console.Write("The special level is: " + characterWithPerks[3].SpecialLevel);
+
+
+            character.Special = characterWithPerks;
+
             /*
-             * generate rest of character
+             * generate rest of character and parse to json
+             *
+             * list:
+             * - Name
+             * - weapon / build (energy: laser, melee: blunt, etc)  TODO: generate a JSON of all weapons
+             * - companion
+             * - settlements (where to consider 'home')
+             * - disposition (unhinged, happy, sad, bad, etc)
+             * - faction
+             * - kleptomaniac (bool)
              */
+            
+            CharacterAssigner.getCompanion(character);
+
+            
         }
     }
 }

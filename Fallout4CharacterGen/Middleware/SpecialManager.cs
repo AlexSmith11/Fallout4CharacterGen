@@ -14,7 +14,7 @@ namespace Fallout4CharacterGen.Middleware
         /// <summary>
         /// rules:
         /// - all special skills start at: 1
-        /// - max number of points spent: 28
+        /// - max number of points spent (so, the characters level): 28
         /// - max any special skill can be: 10
         ///
         /// changed Random.Next() implementation due to thread issues. See here: https://csharpindepth.com/Articles/Random
@@ -29,6 +29,8 @@ namespace Fallout4CharacterGen.Middleware
         /// 
         /// to counter biasing (if it exists) the first special types listed, we select the special type to generate randomly
         /// i.e. select agility to assign to first, then perception, etc
+        ///
+        /// TODO: Make max counter an input from the user.
         /// 
         /// </summary>
         /// <returns>list of special rankings</returns>
@@ -139,7 +141,7 @@ namespace Fallout4CharacterGen.Middleware
                     if (tempPerkToAdd.SpecialRankRequirement == "") tempPerkToAdd.SpecialRankRequirement = "1";
                     
                     foreach (var characterPerk in characterPerks) 
-                        if (characterPerk.FormId == tempPerkToAdd.FormId) 
+                        if (characterPerk.FormId == tempPerkToAdd.FormId)
                             isPerkValid = false;
                     
                     if (!isPerkValid) continue;

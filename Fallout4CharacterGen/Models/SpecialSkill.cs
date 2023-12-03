@@ -4,6 +4,9 @@ namespace Fallout4CharacterGen.Models
 {
     public class SpecialSkill
     {
+        /// <summary>
+        /// A SPECIAL Subclass, e.g. luck.
+        /// </summary>
         public SpecialSkill()
         {
             this.SpecialLevel = 1;
@@ -14,6 +17,9 @@ namespace Fallout4CharacterGen.Models
         public List<SpecialPerk> Perks { get; set; }
     }
 
+    /// <summary>
+    /// An individual skill.
+    /// </summary>
     public class SpecialPerk
     {
         public string Name { get; set; }
