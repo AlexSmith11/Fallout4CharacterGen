@@ -13,7 +13,7 @@ namespace Fallout4CharacterGen
     public class DoStuff
     {
         private readonly ICsvJsonReaderWriter _readerWriter = new CsvAndJsonReaderWriter();
-        private readonly ISpecialManager _specialManager = new SpecialManager();
+        private readonly ICharacterBuilder _characterBuilder = new CharacterBuilder();
 
         /// <summary>
         /// This must be run once to populate the database.
@@ -27,61 +27,29 @@ namespace Fallout4CharacterGen
         }
         
         /// <summary>
-        /// Generate a character.
-        /// Step 1)
-        /// Download a list of perk information from the API.
-        ///
-        /// Step 2)
-        /// Generate the list of a characters SPECIAL points.
-        ///
-        /// Step 3)
-        /// Generate a perks list of a given character based on their SPECIAL points.
-        ///
-        /// Step 4)
-        /// Build the rest of the char - a name, home, etc.
-        ///
-        /// Step 5)
-        /// Generate a JSON of the character to give to the front end.
+        /// Generate a character and export it as a JSON file.
         /// </summary>
         /// <returns></returns>
         public async Task CreateCharacter()
         {
-            // create a character
-            var character = new Character();
-            
-            var allPerks = await _readerWriter.GetAllSpecialPerks();     //TODO: Refactor into the generation of the characters perks?
-            var charactersSpecialRanks = await _specialManager.GenerateSpecialPoints();
-
-            var characterWithPerks = await _specialManager.GeneratePerkLists(allPerks, charactersSpecialRanks);
-            if (characterWithPerks.Contains(null)) return;
-
-            Console.Write(characterWithPerks[3].SpecialName + ": ");
-            Console.WriteLine(characterWithPerks[3].Perks.First().Name);
-            Console.Write("The special level is: " + characterWithPerks[3].SpecialLevel);
-            
-            character.Special = characterWithPerks;
-
             /*
-             * generate rest of character and parse to json
+             * generate character and parse to json
              *
              * list:
-             * - Name
-             * - weapon / build (energy: laser, melee: blunt, etc)  TODO: generate a JSON of all weapons
-             * - companion
-             * - settlements (where to consider 'home')
+             * - Name                                          [DONE]
+             * - companion                                     [DONE]
+             * - settlements (where to consider 'home')        [DONE]
+             * - perks                                         [DONE]
              * - disposition (unhinged, happy, sad, bad, etc)
+             * * - weapon / build (energy: laser, melee: blunt, etc)  TODO: generate a JSON of all weapons
              * - faction
              * - kleptomaniac (bool)
              */
 
-            character.Name = await _readerWriter.AskForCharacterName();
+            var character = await _characterBuilder.BuildCharacter();
 
-            // TODO: Hyper inefficient - should not need to send the whole character only to assign a string!
-            CharacterBuilder.getCompanion(character);
-            CharacterBuilder.getHomeSettlement(character);
-            
             // Export character Data for frontend:
-            JsonParser.WriteCharacterToDisk(character, "player1");
+            JsonParser.WriteCharacterToDisk(character, character.Name);
         }
     }
 }
