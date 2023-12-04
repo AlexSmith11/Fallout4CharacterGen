@@ -16,9 +16,9 @@ namespace Fallout4CharacterGen.Middleware
         {
             var character = new Character
             {
-                Special = await GetSpecialAndPerks(),
-                Companion = GetCompanion(),
-                HomeSettlement = GetHomeSettlement(),
+                Special = await SetSpecialAndPerks(),
+                Companion = SetCompanion(),
+                HomeSettlement = SetHomeSettlement(),
                 Name = await _readerWriter.AskForCharacterName()
             };
 
@@ -26,7 +26,7 @@ namespace Fallout4CharacterGen.Middleware
             return character;
         }
 
-        private async Task<List<SpecialSkill>> GetSpecialAndPerks()
+        private async Task<List<SpecialSkill>> SetSpecialAndPerks()
         {
             var allPerks = await _readerWriter.GetAllSpecialPerks();     //TODO: Refactor into the generation of the characters perks below?
             var charactersSpecialRanks = await _specialManager.GenerateSpecialPoints();
@@ -38,7 +38,7 @@ namespace Fallout4CharacterGen.Middleware
 
         }
         
-        private static string GetCompanion()
+        private static string SetCompanion()
         {
             var rng = new Random();
             var characters = Companions.CompanionNames;
@@ -46,7 +46,7 @@ namespace Fallout4CharacterGen.Middleware
             return characters[index];
         }
 
-        private static string GetHomeSettlement()
+        private static string SetHomeSettlement()
         {
             var rng = new Random();
             var settlements = Settlements.SettlementNames;

@@ -110,8 +110,8 @@ namespace Fallout4CharacterGen.Middleware
         /// 
         /// <code>
         /// Rules:
-        /// use characters special list to contain all new perks - select ranges to display, don't need more than one list
-        /// for loop? where i = the player lvl
+        /// use characters special list (characterSpecialSkills) to contain all new perks - select ranges to display, don't need more than one list
+        /// i = the player lvl
         /// add a perk that:
         /// - is not a duplicate
         /// - has a player req &lt; i
@@ -133,7 +133,7 @@ namespace Fallout4CharacterGen.Middleware
             const int playerLevelCap = 40;  // TODO: make this changeable by user
             var rng = new Random();
 
-            for (var i = 1; i < playerLevelCap + 1; i++)    // add one because of array index stuff
+            for (var playerLevel = 1; playerLevel < playerLevelCap + 1; playerLevel++)    // add one because of array index stuff
             {
                 var randomSpecialIndex = 0;
                 var randomPerkIndex = 0;
@@ -169,7 +169,7 @@ namespace Fallout4CharacterGen.Middleware
                     if (!isPerkValid) continue;
                     
                     var temp = int.Parse(tempPerkToAdd.PlayerLevelRequirement);
-                    if (temp > i) continue;
+                    if (temp > playerLevel) continue;
                     
                     if (int.Parse(tempPerkToAdd.SpecialRankRequirement) > characterSpecialSkill.SpecialLevel) continue;
 

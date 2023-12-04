@@ -20,13 +20,14 @@ namespace Fallout4CharacterGen
         
         /// <summary>
         /// This must be run once to populate the database.
+        /// Starts the process of transforming the data from CSV to JSON.
         ///
         /// No longer needed as the data has been processed and is now hosted on my GitHub.
         /// </summary>
         /// <returns></returns>
         public async Task LoadAndWriteData()
         {
-            await _readerWriter.AskForFilename(); // Run the CSV & JSON reader writer program
+            await _readerWriter.AskForFilename();
         }
         
         /// <summary>
@@ -44,15 +45,15 @@ namespace Fallout4CharacterGen
              * - settlements (where to consider 'home')        [DONE]
              * - perks                                         [DONE]
              * - disposition (unhinged, happy, sad, bad, etc)
-             * * - weapon / build (energy: laser, melee: blunt, etc)  TODO: generate a JSON of all weapons
+             * - weapon / build (energy: laser, melee: blunt, etc)  TODO: generate a JSON of all weapons
              * - faction
              * - kleptomaniac (bool)
              */
 
             var character = await _characterBuilder.BuildCharacter();
 
-            // Export character Data for frontend:
             JsonParser.WriteCharacterToDisk(character, character.Name);
+            Console.WriteLine("Character successfully generated");
         }
     }
 }

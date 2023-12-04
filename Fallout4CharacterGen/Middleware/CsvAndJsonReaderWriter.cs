@@ -17,7 +17,7 @@ namespace Fallout4CharacterGen.Middleware
     public class CsvAndJsonReaderWriter : ICsvJsonReaderWriter
     {
         /// <summary>
-        /// Inefficient method that returns a list of all SPECIAL data (strength & all it's perks, perception, etc).
+        /// Inefficient method that returns a list of all SPECIAL data (strength & ALL it's perks, perception, etc).
         ///
         /// Makes 7 API calls for each SPECIAL subclasses to get all associated perks.
         /// </summary>
