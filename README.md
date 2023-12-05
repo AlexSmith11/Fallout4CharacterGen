@@ -2,7 +2,7 @@
 
 Fallout 4 character generator
 
-This is supposed to or going to be a basic RPG character generator.
+This is a basic RPG character generator.
 
 This project was undertaken in order to learn about data handling. Transforming it, formatting it, loading/saving it, etc.
 
@@ -21,10 +21,10 @@ Currently this generator will be used for Fallout 4, which has various ways to t
 ### TODO:
 
 - Host output of the generator for a front-end to pickup
-- Create a sorted for the list of perks. Currently they already are but what if they are not?
+- Create a sorter for the list of perks. Currently they already are but what if they are not?
 - Creation of a frontend in React/NextJS. This will include ways to manipulate the data in various ways
 
-S.P.E.C.I.A.L. hosted on: https://github.com/AlexSmith11/fallout4_data
+S.P.E.C.I.A.L. (input data) hosted on: https://github.com/AlexSmith11/fallout4_data
 
 # Gameplay Explanation
 
