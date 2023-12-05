@@ -8,6 +8,13 @@ This project was undertaken in order to learn about data handling. Transforming 
 
 Currently this generator will be used for Fallout 4, which has various ways to tailor your character.
 
+### To run:
+
+- Just make sure you can run any old C# project on your computer, this isn't JS.
+- Included are a collection of functions that generate JSON/CSV files; you can ignore these.
+- Run the program, inputting your characters name (you might need to create/change an output dir/path for it oops).
+- Optional: Take the outputted JSON needed to run the frontend (you'll need to replace the one called 'David.json').
+
 ### The steps taken during this project:
 
 - Web data scraper written to get the S.P.E.C.I.A.L. and perk data from the publicly available source at https://fallout.fandom.com/wiki
