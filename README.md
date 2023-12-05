@@ -20,6 +20,7 @@ Currently this generator will be used for Fallout 4, which has various ways to t
 
 ### TODO:
 
+- Move all input data to an api
 - Host output of the generator for a front-end to pickup
 - Create a sorter for the list of perks. Currently they already are but what if they are not?
 - Creation of a frontend in React/NextJS. This will include ways to manipulate the data in various ways
